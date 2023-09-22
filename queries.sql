@@ -83,6 +83,9 @@ SELECT EXTRACT(YEAR FROM creationdate) as year ,  SUM(answercount+viewcount+comm
 
 
 --Find the top 5 users who have performed the most number of actions 
+SELECT users.displayname,point_table.id,point_table.points
+FROM users
+INNER JOIN (
 SELECT user_table.id, SUM(total_votes + number_of_posts+comment_table.total_comments) AS points 
     FROM (
     SELECT comments.userid , COUNT(comments.id)*3 AS total_comments
@@ -100,4 +103,7 @@ SELECT user_table.id, SUM(total_votes + number_of_posts+comment_table.total_comm
    ON user_table.id = comment_table.userid
    GROUP by user_table.id
    ORDER BY points DESC
-   LIMIT 5;
+   LIMIT 5
+) AS point_table
+ON point_table.id = users.id
+ORDER BY point_table.points DESC;
