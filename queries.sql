@@ -1,7 +1,9 @@
 --Query 1 to get percentage of posts with atleast 1 answer
-SELECT (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM posts)) AS percentage_answered
-FROM posts
+SELECT (COUNT(questions.posttypeid)*100.0 / (SELECT COUNT(*) FROM POSTS WHERE posttypeid = 1)) as percentage 
+FROM (
+	SELECT answercount,posttypeid FROM POSTS
 WHERE answercount > 0 AND posttypeid = 1
+) AS questions
 
 --Query 2 to get top ten reputable users
 SELECT id,reputation,displayname FROM users
