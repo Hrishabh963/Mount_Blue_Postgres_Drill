@@ -96,7 +96,7 @@ SELECT user_table.id, SUM(total_votes + number_of_posts+comment_table.total_comm
    INNER JOIN posts
    ON users.id = posts.owneruserid
    GROUP BY users.id
-   ) as user_table
+   ) AS user_table
    ON user_table.id = comment_table.userid
    GROUP by user_table.id
    ORDER BY points DESC
